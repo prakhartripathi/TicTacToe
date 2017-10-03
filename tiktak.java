@@ -1,7 +1,7 @@
 import java.util.Scanner;
 class tiktak{
-	static int board[][] = new int[3][3];
-	static int winnerPlayer = 0;
+	static char board[][] = new char[3][3];
+	static char winnerPlayer = 'k';
 	static Scanner input = new Scanner(System.in);
 	static int count= 0;
 
@@ -11,7 +11,7 @@ class tiktak{
 		System.out.println();
 		for(i=0; i<3; i++){
 			for(j=0; j<3; j++){
-				if(board[i][j] == 0)
+				if(board[i][j] == 'n')
 						System.out.print(" "+".");
 				else{
 					System.out.print(" "+board[i][j]);
@@ -23,7 +23,7 @@ class tiktak{
 	}
 
 	//move of player
-	static void moveOfPlayer(int n){
+	static void moveOfPlayer(char n){
 		int move=0;
 		do{
 		System.out.print("which position? =");
@@ -45,7 +45,7 @@ class tiktak{
 							break;
 				}
 			}
-			if(position>=1&&position<=9&&board[row][column]==0){
+			if(position>=1&&position<=9&&board[row][column]=='n'){
 				board[row][column] = n;
 				count++;
 				move =1;
@@ -70,28 +70,28 @@ class tiktak{
 	//checks winner
 	static int winner(){
 
-			if(board[1][0]!=0 && board[1][0] == board[1][1] && board[1][1] == board[1][2]){
+			if(board[1][0]!='n' && board[1][0] == board[1][1] && board[1][1] == board[1][2]){
 				winnerPlayer =  board[1][0];
 				return 1;
-			}else if(board[0][0]!=0 && board[0][0] == board[0][1] && board[0][1] == board[0][2]){
+			}else if(board[0][0]!='n' && board[0][0] == board[0][1] && board[0][1] == board[0][2]){
 				winnerPlayer = board[0][0];
 				return 1;
-			}else if(board[2][0]!=0 && board[2][0] == board[2][1] && board[2][1] == board[2][2]){
+			}else if(board[2][0]!='n' && board[2][0] == board[2][1] && board[2][1] == board[2][2]){
 				winnerPlayer = board[2][0];
 				return 1;
-			}else if(board[0][0]!=0 && board[0][0] == board[1][0] && board[1][0] == board[2][0]){
+			}else if(board[0][0]!='n' && board[0][0] == board[1][0] && board[1][0] == board[2][0]){
 				winnerPlayer = board[0][0];
 				return 1;
-			}else if(board[0][1]!=0 && board[0][1] == board[1][1] && board[1][1] == board[2][1]){
+			}else if(board[0][1]!='n' && board[0][1] == board[1][1] && board[1][1] == board[2][1]){
 				winnerPlayer = board[0][1];
 				return 1;
-			}else if(board[0][2]!=0 && board[0][2] == board[1][2] && board[1][2] == board[2][2]){
+			}else if(board[0][2]!='n' && board[0][2] == board[1][2] && board[1][2] == board[2][2]){
 				winnerPlayer = board[0][2];
 				return 1;
-			}else if(board[0][0]!=0 && board[0][0] == board[1][1] && board[1][1] == board[2][2]){
+			}else if(board[0][0]!='n' && board[0][0] == board[1][1] && board[1][1] == board[2][2]){
 				winnerPlayer = board[0][0];
 				return 1;
-			}else if(board[0][2] !=0 &&board[0][2] == board[1][1] && board[1][1] == board[2][0]){
+			}else if(board[0][2] !='n' &&board[0][2] == board[1][1] && board[1][1] == board[2][0]){
 				winnerPlayer = board[0][2];
 				return 1;
 			}
@@ -103,27 +103,30 @@ class tiktak{
 		int chance = 0;
 		for(i=0; i<3; i++){
 			for(j=0; j<3; j++){
-				board[i][j] = 0;
+				board[i][j] = 'n';
 			}
 		}
 		while(gameover()==0){
 			if(chance==0){
 				System.out.println("Player 1st chance");
 				System.out.println(".....Your move..... ");
-				moveOfPlayer(1);
+				moveOfPlayer('x');
 				chance = 1;
 				
 			}else{
 				System.out.println("Player 2nd chance");
 				System.out.println(".....Your move..... ");
-				moveOfPlayer(2);
+				moveOfPlayer('o');
 				chance = 0;
 				
 			}
 			statusOfGame();	
 		}
-		if(winnerPlayer!=0){
-			System.out.print("winner = Player"+winnerPlayer+"....congratulations....");
+		if(winnerPlayer!='k'){
+			if(winnerPlayer=='x')
+				System.out.print("winner is Player1 ....congratulations");
+			if(winnerPlayer=='o')
+				System.out.print("winner is Player2 ....congratulations");
 		}else{
 			System.out.print("Match Drawn");
 		}
