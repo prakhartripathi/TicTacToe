@@ -1,9 +1,41 @@
-import java.util.Scanner;
+import java.util.*;
 class tiktak{
 	static char board[][] = new char[3][3];
 	static char winnerPlayer = 'k';
 	static Scanner input = new Scanner(System.in);
 	static int count= 0;
+	static ArrayList<Integer>  list = new ArrayList<Integer>(); 
+	public static void arrayListInitial(){
+		for(int i=1;i<=9;i++){
+			list.add(i);
+		}
+	}
+
+	static void moveOfComputer(char n){
+		Random r = new Random();
+		int temp = list.get(r.nextInt(list.size()));
+		list.remove(new Integer(temp));
+		int row=0, column=0;
+			if(temp%3 !=0){
+				row = (temp-1)/3;
+				column = temp%3 -1;
+			}else{
+				switch(temp){
+					case 3: row = 0;
+							column = 2;
+							break;
+					case 6: row = 1;
+							column = 2;
+							break;	
+					case 9: row = 2;
+							column =2;
+							break;
+				}
+			}
+			board[row][column] = n;
+				count++;
+			System.out.println("Computer moved at position "+temp);
+	}
 
 	//display the current status of game
 	static void statusOfGame(){
@@ -47,6 +79,7 @@ class tiktak{
 			}
 			if(position>=1&&position<=9&&board[row][column]=='n'){
 				board[row][column] = n;
+				list.remove(new Integer(position));
 				count++;
 				move =1;
 			}else{
@@ -106,6 +139,7 @@ class tiktak{
 				board[i][j] = 'n';
 			}
 		}
+		arrayListInitial();
 		while(gameover()==0){
 			if(chance==0){
 				System.out.println("Player 1st chance");
@@ -114,9 +148,8 @@ class tiktak{
 				chance = 1;
 				
 			}else{
-				System.out.println("Player 2nd chance");
-				System.out.println(".....Your move..... ");
-				moveOfPlayer('o');
+				
+				moveOfComputer('o');
 				chance = 0;
 				
 			}
@@ -126,7 +159,7 @@ class tiktak{
 			if(winnerPlayer=='x')
 				System.out.print("winner is Player1 ....congratulations");
 			if(winnerPlayer=='o')
-				System.out.print("winner is Player2 ....congratulations");
+				System.out.print("winner is Computer ....congratulations");
 		}else{
 			System.out.print("Match Drawn");
 		}
